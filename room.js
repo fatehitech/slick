@@ -6,6 +6,9 @@ module.exports = Room;
 function Room(dir){
   this.dir = dir;
   this.name = path.basename(dir)
+  this.watcher = {
+    watching: false
+  }
 };
 
 Room.prototype.setup = function(cb) {
@@ -24,4 +27,12 @@ Room.prototype.addTextEvent = function(msg) {
   //})
 }
 
+Room.prototype.startWatching = function() {
+  console.log('+w');
+  this.watcher.watching = true;
+}
 
+Room.prototype.stopWatching = function() {
+  console.log('-w');
+  this.watcher.watching = false;
+}

@@ -9,14 +9,18 @@ function ChatApp(io, config){
     if (err) throw err;
     io.on('connection', function(socket){
       ++self.connectionCount;
-      self.updateWatcher();
+      if (! room.watcher.watching) {
+        room.startWatching();
+      }
       room.getRecentEvents(10, function(events) {
         io.emit('clear history');
         io.emit('events', events);
       });
       socket.on('disconnect', function(){
         --self.connectionCount;
-        self.updateWatcher();
+        if (room.watcher.watching && self.connectionCount === 0) {
+          room.stopWatching();
+        }
       });
     });
 
@@ -27,8 +31,3 @@ function ChatApp(io, config){
     });
   });
 };
-
-ChatApp.prototype.updateWatcher = function() {
-  console.log(this.connectionCount);
-  console.log('updatewatcher');
-}
