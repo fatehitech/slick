@@ -21,10 +21,17 @@ Room.prototype.getRecentEvents = function(count, cb) {
   cb([]);
 }
 
-Room.prototype.addTextEvent = function(msg) {
-  //fs.writeFile(function() {
+Room.prototype.addTextEvent = function(username, msg) {
+  var date = new Date().toJSON();
+  var fname = date+'|'+username+".txt"
+  this.addEvent(fname, msg);
+}
 
-  //})
+Room.prototype.addEvent = function(fname, content) {
+  var fpath = path.join(this.dir, fname);
+  fs.writeFile(fpath, content, function(err) {
+    if (err) throw err;
+  })
 }
 
 Room.prototype.startWatching = function() {
