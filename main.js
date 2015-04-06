@@ -31,10 +31,6 @@ var app = new ChatApp(io, {
   username: "New User"
 })
 
-/*
-/Users/keyvan/Dropbox/slick/fatehitech/some_room
-*/
-
 var joinRoom = function(room) {
   localStorage.room = room;
   app.setupRoom(room, function(err) {

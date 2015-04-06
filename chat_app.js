@@ -5,7 +5,10 @@ function ChatApp(io, config){
 
   var emitEvent = function(e) {
     if (e.type === "txt") {
-      io.emit('chat message', e.toString(), { time: e.time });
+      io.emit('chat message', e.toString(), {
+        time: e.time,
+        username: e.username
+      });
     } else {
       io.emit('chat message', "unknown event type!");
     }
