@@ -2,9 +2,6 @@
   "name": "slick",
   "version": "1.0.0",
   "main": "index.html",
-  "scripts": {
-    "build": "zip -r ../${PWD##*/}.nw *"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/fatehitech/slick.git"
