@@ -13,6 +13,7 @@ function ChatApp(io, config){
 
   this.setupRoom = function(roomDir, cb) {
     var room = new Room(roomDir);
+    io.emit('clear history');
     return room.setup(function(err) {
       if (err) return cb(err);
       if (! room.watcher.watching) {

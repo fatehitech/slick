@@ -25,8 +25,11 @@ Room.prototype.getRecentEvents = function(count, cb) {
     if (err) return cb(err);
     var out = _(res).map(function(v) { 
       var filePath = path.join(dir,v);
-      var modTime = fs.statSync(filePath).mtime.getTime();
-      return { path:filePath, time: modTime }; 
+      var stats = fs.statSync(filePath);
+      var modTime = stats.mtime.getTime();
+      return { path:filePath, time: modTime, isFile: stats.isFile() }; 
+    }).reject(function(e) {
+      return !e.isFile;
     }).sort(function(a, b) { return a.time - b.time; });
     if (count > 0) out = out.takeRight(count);
     out = out.map(function(e) { return new ChatEvent(e.path, e.time) });
