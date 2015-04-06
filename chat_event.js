@@ -4,6 +4,7 @@ module.exports = ChatEvent;
 function ChatEvent(path, time){
   this.path = path;
   this.time = time;
+  this.type = "txt";
 };
 
 

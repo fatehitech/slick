@@ -9,8 +9,8 @@ var ChatEvent = require('./chat_event');
 module.exports = Room;
 function Room(dir){
   this.dir = dir;
-  this.name = path.basename(dir)
-  this.watcher = new Watcher()
+  this.name = path.basename(dir);
+  this.watcher = new Watcher(dir);
 };
 
 Room.prototype.setup = function(cb) {

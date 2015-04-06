@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/fatehitech/slick",
   "dependencies": {
+    "chokidar": "^1.0.0-rc5",
     "express": "^4.12.3",
     "lodash": "^3.6.0",
     "minimist": "^1.1.1",
