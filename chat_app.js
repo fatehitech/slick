@@ -12,7 +12,9 @@ function ChatApp(io, config){
       if (! room.watcher.watching) {
         room.watcher.startWatching();
       }
-      room.getRecentEvents(10, function(events) {
+      room.getRecentEvents(10, function(err, events) {
+        if (err) throw err;
+        console.log(events);
         io.emit('clear history');
         io.emit('events', events);
       });

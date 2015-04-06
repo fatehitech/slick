@@ -2,6 +2,7 @@ var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
 var Watcher = require('./watcher');
+var _ = require('lodash');
 
 module.exports = Room;
 function Room(dir){
@@ -16,8 +17,19 @@ Room.prototype.setup = function(cb) {
   } else cb();
 }
 
+/* Most recent event is last in the array */
 Room.prototype.getRecentEvents = function(count, cb) {
-  cb([]);
+  var dir = this.dir;
+  return fs.readdir(dir, function(err, res) {
+    if (err) return cb(err);
+    var out = _(res).map(function(v) { 
+      var filePath = path.join(dir,v);
+      var modTime = fs.statSync(filePath).mtime.getTime();
+      return { path:filePath, time: modTime }; 
+    }).sort(function(a, b) { return a.time - b.time; });
+    if (count > 0) out = out.takeRight(count);
+    return cb(err, out.value());
+  })
 }
 
 Room.prototype.addTextEvent = function(username, msg) {
