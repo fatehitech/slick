@@ -28,6 +28,16 @@ io.on('chat message', function(msg, options){
 });
 
 var app = new ChatApp(io, {
-  username: "New User",
-  roomDir: "/Users/keyvan/Dropbox/slick/fatehitech/some_room"
+  username: "New User"
 })
+
+/*
+/Users/keyvan/Dropbox/slick/fatehitech/some_room
+*/
+
+$('#room-input').submit(function(e) {
+  var room = e.target.room.value;
+  app.setupRoom(room, function(err) {
+    if (err) $('#status').text(err.message);
+  })
+});

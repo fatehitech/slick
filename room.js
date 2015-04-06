@@ -1,6 +1,5 @@
 var fs = require('fs');
 var path = require('path');
-var mkdirp = require('mkdirp');
 var Watcher = require('./watcher');
 var _ = require('lodash');
 
@@ -14,9 +13,9 @@ function Room(dir){
 };
 
 Room.prototype.setup = function(cb) {
-  if ( ! fs.existsSync(this.dir)) {
-    mkdirp(this.dir, cb);
-  } else cb();
+  if ( ! fs.existsSync(this.dir))
+    return cb(new Error('No such directory'));
+  else return cb();
 }
 
 /* Most recent event is last in the array */

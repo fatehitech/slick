@@ -2,7 +2,6 @@ var Room = require('./room');
 
 module.exports = ChatApp;
 function ChatApp(io, config){
-  var room = new Room(config.roomDir);
 
   var emitEvent = function(e) {
     if (e.type === "txt") {
@@ -12,19 +11,23 @@ function ChatApp(io, config){
     }
   }
 
-  room.setup(function(err) {
-    if (err) throw err;
-    if (! room.watcher.watching) {
-      room.watcher.startWatching(emitEvent);
-    }
-    room.getRecentEvents(10, function(err, events) {
-      if (err) throw err;
-      io.emit('clear history');
-      events.map(emitEvent);
-    });
+  this.setupRoom = function(roomDir, cb) {
+    var room = new Room(roomDir);
+    return room.setup(function(err) {
+      if (err) return cb(err);
+      if (! room.watcher.watching) {
+        room.watcher.startWatching(emitEvent);
+      }
+      room.getRecentEvents(10, function(err, events) {
+        if (err) throw err;
+        io.emit('clear history');
+        events.map(emitEvent);
+      });
 
-    io.on('user input', function(msg){
-      room.addTextEvent(config.username, msg);
+      io.on('user input', function(msg){
+        room.addTextEvent(config.username, msg);
+      });
+      cb(null, room);
     });
-  });
+  }
 };
