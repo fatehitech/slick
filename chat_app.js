@@ -10,7 +10,7 @@ function ChatApp(io, config){
     io.on('connection', function(socket){
       ++self.connectionCount;
       if (! room.watcher.watching) {
-        room.startWatching();
+        room.watcher.startWatching();
       }
       room.getRecentEvents(10, function(events) {
         io.emit('clear history');
@@ -19,7 +19,7 @@ function ChatApp(io, config){
       socket.on('disconnect', function(){
         --self.connectionCount;
         if (room.watcher.watching && self.connectionCount === 0) {
-          room.stopWatching();
+          room.watcher.stopWatching();
         }
       });
     });

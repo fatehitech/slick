@@ -1,14 +1,13 @@
 var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
+var Watcher = require('./watcher');
 
 module.exports = Room;
 function Room(dir){
   this.dir = dir;
   this.name = path.basename(dir)
-  this.watcher = {
-    watching: false
-  }
+  this.watcher = new Watcher()
 };
 
 Room.prototype.setup = function(cb) {
@@ -32,14 +31,4 @@ Room.prototype.addEvent = function(fname, content) {
   fs.writeFile(fpath, content, function(err) {
     if (err) throw err;
   })
-}
-
-Room.prototype.startWatching = function() {
-  console.log('+w');
-  this.watcher.watching = true;
-}
-
-Room.prototype.stopWatching = function() {
-  console.log('-w');
-  this.watcher.watching = false;
 }
