@@ -7,7 +7,6 @@ function ChatApp(io, config){
   var self = this;
 
   var emitEvent = function(e) {
-    console.log(e);
     if (e.type === "txt") {
       io.emit('chat message', e.toString(), { time: e.time });
     } else {
