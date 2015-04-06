@@ -6,7 +6,7 @@ npm-install:
 
 nw:
 	mkdir -p dist
-	zip -qr dist/app.nw *
+	zip -qr ../app.nw *
 
 build: npm-install nw
 	
