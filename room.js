@@ -4,6 +4,8 @@ var mkdirp = require('mkdirp');
 var Watcher = require('./watcher');
 var _ = require('lodash');
 
+var ChatEvent = require('./chat_event');
+
 module.exports = Room;
 function Room(dir){
   this.dir = dir;
@@ -28,6 +30,7 @@ Room.prototype.getRecentEvents = function(count, cb) {
       return { path:filePath, time: modTime }; 
     }).sort(function(a, b) { return a.time - b.time; });
     if (count > 0) out = out.takeRight(count);
+    out = out.map(function(e) { return new ChatEvent(e.path, e.time) });
     return cb(err, out.value());
   })
 }

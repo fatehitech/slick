@@ -20,19 +20,6 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/jquery-1.11.1.js"></script>
-    <script>
-      var socket = io();
-      $('form').submit(function(){
-        var msg = $('#m').val().trim();
-        if (msg.length >= 1) {
-          socket.emit('chat message', msg);
-          $('#m').val('');
-        }
-        return false;
-      });
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
-      });
-    </script>
+    <script src="/main.js"></script>
   </body>
 </html>

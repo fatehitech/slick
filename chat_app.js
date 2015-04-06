@@ -14,9 +14,10 @@ function ChatApp(io, config){
       }
       room.getRecentEvents(10, function(err, events) {
         if (err) throw err;
-        console.log(events);
         io.emit('clear history');
-        io.emit('events', events);
+        events.map(function(e) {
+          io.emit('chat message', e.toString(), { time: e.time });
+        });
       });
       socket.on('disconnect', function(){
         --self.connectionCount;
