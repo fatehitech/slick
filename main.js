@@ -35,14 +35,16 @@ var joinRoom = function(room) {
   localStorage.room = room;
   app.setupRoom(room, function(err) {
     if (err) $('#status').text(err.message);
+    console.log("joined room "+room);
   })
 }
 
 var room = localStorage.room;
 if (room) joinRoom(room);
 
-$('form#room-input').submit(function(e) {
-  joinRoom(e.target.room.value);
+$('#set-name').click(function(e) {
+  app.setUsername(prompt('Enter your name') || "Anonymous")
+  return false;
 });
 
 $('input#room').change(function(e) {

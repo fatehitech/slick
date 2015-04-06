@@ -14,6 +14,11 @@ function ChatApp(io, config){
     }
   }
 
+  this.setUsername = function(username) {
+    console.log(username);
+    config.username = username;
+  }
+
   this.setupRoom = function(roomDir, cb) {
     var room = new Room(roomDir);
     io.emit('clear history');

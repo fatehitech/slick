@@ -1,5 +1,6 @@
 var fs = require('fs');
 var path = require('path');
+var sanitize = require("sanitize-filename");
 var Watcher = require('./watcher');
 var _ = require('lodash');
 
@@ -39,7 +40,7 @@ Room.prototype.getRecentEvents = function(count, cb) {
 
 Room.prototype.addTextEvent = function(username, msg) {
   var date = new Date().toJSON();
-  var fname = date+'|'+username+".txt"
+  var fname = sanitize(date+'--'+username+".txt");
   this.addEvent(fname, msg);
 }
 
