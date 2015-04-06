@@ -10,7 +10,6 @@ function Watcher(dir){
 };
 
 Watcher.prototype.startWatching = function(emit) {
-  console.log('+watching');
   this.watching = true;
   this.watcher = chokidar.watch(this.dir, {
     ignored: /[\/\\]\./,
@@ -26,7 +25,6 @@ Watcher.prototype.startWatching = function(emit) {
 }
 
 Watcher.prototype.stopWatching = function() {
-  console.log('-watching');
   this.watcher.close();
   this.watcher = null;
   this.watching = false;

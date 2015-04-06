@@ -2,7 +2,6 @@ var Room = require('./room');
 
 module.exports = ChatApp;
 function ChatApp(io, config){
-  console.log('ss', config);
   var room = new Room(config.roomDir);
 
   var emitEvent = function(e) {
